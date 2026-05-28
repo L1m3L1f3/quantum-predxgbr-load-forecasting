@@ -1,0 +1,180 @@
+PredXGBR Paper — Results and Evaluation Metrics Summary
+Source PDF: electronics-13-04521 (1).pdf
+Paper: Zabin, R.; Haque, K.F.; Abdelgawad, A. PredXGBR: A Machine Learning Framework for Short-Term Electrical Load Prediction. Electronics 2024, 13, 4521.
+Purpose: Gather all reported result metrics as text for comparison with other research.
+
+============================================================
+1. MAIN CLAIMS / OVERALL RESULTS
+============================================================
+- Proposed model: PredXGBR-1, an XGBoost regression model using short-term lag features.
+- Short-term lag features: load mean and standard deviation over previous 6, 12, and 24 hours.
+- Long-term lag features used in Model2: aggregate statistics over previous 24 h, 48 h, and weekly intervals.
+- Evaluation datasets: PJM, PJME, PJMW, AEP, Dayton.
+- Main evaluation metrics: MAPE (%) and R2.
+- Reported overall PredXGBR-1 performance: MAPE between 0.98% and 1.28% in Table 3; paper abstract/conclusion summarizes MAPE around 0.98–1.2% and R2 close to 0.99.
+- PredXGBR-1 achieved R2 values of 0.98–0.99 across datasets.
+- PredXGBR-2 / Model2 performed much worse for XGBoost in Table 3, with R2 between 0.57 and 0.71.
+
+============================================================
+2. DATASETS USED FOR MODEL EVALUATION
+============================================================
+Dataset | Description | Time Span
+PJM | PJM Interconnection LLC regional transmission organization data | 1998–2002
+PJME | Hourly data from PJM East region | 2001–2018
+PJMW | Hourly data from PJM West region | 2001–2018
+AEP | American Electric Power data | 2004–2018
+Dayton | Dayton Power and Light Company data | 2004–2018
+
+============================================================
+3. TABLE 3 — DETAILED MODEL RESULTS
+============================================================
+Notes:
+- Model1 = short-term lag feature model.
+- Model2 = long-term lag feature model.
+- MAPE is reported in percent (%).
+- R2 is coefficient of determination.
+
+Model | Dataset | Model1 MAPE (%) | Model2 MAPE (%) | Model1 R2 | Model2 R2
+SVM | PJM | 5.13 | 6.87 | 0.96 | 0.71
+SVM | PJME | 5.80 | 8.59 | 0.96 | 0.63
+SVM | PJMW | 2.80 | 8.42 | 0.96 | 0.63
+SVM | AEP | 6.23 | 8.08 | 0.94 | 0.57
+SVM | Dayton | 7.36 | 8.49 | 0.93 | 0.62
+
+RNN | PJM | 19.46 | 19.44 | 0.92 | 0.93
+RNN | PJME | 9.49 | 9.58 | 0.93 | 0.93
+RNN | PJMW | 4.28 | 4.87 | 0.59 | 0.90
+RNN | AEP | 7.86 | 7.49 | 0.57 | 0.89
+RNN | Dayton | 12.74 | 15.54 | 0.62 | 0.87
+
+LSTM | PJM | 19.96 | 21.12 | 0.92 | 0.89
+LSTM | PJME | 9.21 | 9.57 | 0.93 | 0.92
+LSTM | PJMW | 4.70 | 4.71 | 0.91 | 0.92
+LSTM | AEP | 7.00 | 7.46 | 0.93 | 0.91
+LSTM | Dayton | 10.80 | 15.46 | 0.92 | 0.89
+
+TCN | PJM | 19.46 | 19.44 | 0.92 | 0.93
+TCN | PJME | 7.85 | 9.20 | 0.95 | 0.90
+TCN | PJMW | 3.90 | 4.55 | 0.88 | 0.91
+TCN | AEP | 7.86 | 7.49 | 0.57 | 0.89
+TCN | Dayton | 12.74 | 15.54 | 0.62 | 0.87
+
+Transformer | PJM | 19.96 | 21.12 | 0.92 | 0.89
+Transformer | PJME | 8.10 | 9.45 | 0.94 | 0.89
+Transformer | PJMW | 4.05 | 4.60 | 0.89 | 0.90
+Transformer | AEP | 7.00 | 7.46 | 0.93 | 0.91
+Transformer | Dayton | 10.80 | 15.46 | 0.92 | 0.89
+
+PredXGBR | PJM | 1.07 | 6.87 | 0.99 | 0.71
+PredXGBR | PJME | 1.28 | 8.59 | 0.99 | 0.58
+PredXGBR | PJMW | 1.07 | 8.42 | 0.98 | 0.59
+PredXGBR | AEP | 0.98 | 8.08 | 0.99 | 0.57
+PredXGBR | Dayton | 1.12 | 8.49 | 0.99 | 0.62
+
+============================================================
+4. PREDXGBR-1 MODEL1 RESULT SUMMARY BY DATASET
+============================================================
+Dataset | MAPE (%) | R2
+PJM | 1.07 | 0.99
+PJME | 1.28 | 0.99
+PJMW | 1.07 | 0.98
+AEP | 0.98 | 0.99
+Dayton | 1.12 | 0.99
+
+Average PredXGBR-1 MAPE across five datasets = 1.104%
+Average PredXGBR-1 R2 across five datasets = 0.988
+Best MAPE = 0.98% on AEP
+Worst MAPE = 1.28% on PJME
+Best R2 = 0.99 on PJM, PJME, AEP, Dayton
+Lowest R2 = 0.98 on PJMW
+
+============================================================
+5. MODEL1 AVERAGE RESULTS ACROSS FIVE DATASETS
+============================================================
+Model | Average Model1 MAPE (%) | Average Model1 R2
+SVM | 5.464 | 0.950
+RNN | 10.766 | 0.726
+LSTM | 10.334 | 0.922
+TCN | 10.362 | 0.788
+Transformer | 10.182 | 0.920
+PredXGBR | 1.104 | 0.988
+
+Ranking by average Model1 MAPE, lower is better:
+1. PredXGBR: 1.104%
+2. SVM: 5.464%
+3. Transformer: 10.182%
+4. LSTM: 10.334%
+5. TCN: 10.362%
+6. RNN: 10.766%
+
+============================================================
+6. MODEL2 AVERAGE RESULTS ACROSS FIVE DATASETS
+============================================================
+Model | Average Model2 MAPE (%) | Average Model2 R2
+SVM | 8.090 | 0.632
+RNN | 11.384 | 0.904
+LSTM | 11.664 | 0.906
+TCN | 11.244 | 0.900
+Transformer | 11.618 | 0.896
+PredXGBR | 8.090 | 0.614
+
+Note: In Table 3, PredXGBR Model2 MAPE values are the same as SVM Model2 MAPE values for all datasets, while the R2 values are close but not identical.
+
+============================================================
+7. COMPUTATIONAL COMPLEXITY AND INFERENCE TIME
+============================================================
+Hardware used for inference-time measurement:
+- Linux-based workstation
+- 12th Gen Intel Core i7-12700K CPU
+- NVIDIA RTX A4000 GPU
+- 64 GB RAM
+
+Reported exact values in text:
+Model | Lag Type | GFLOPS | Inference Time
+Transformer-2 | Long-term lag / Model2 | 10 GFLOPS | 2.9 ms
+LSTM-2 | Long-term lag / Model2 | 9.18 GFLOPS | 2.56 ms
+PredXGBR-1 | Short-term lag / Model1 | 1.5 GFLOPS | 0.2 ms
+TCN-1 | Short-term lag / Model1 | 5.5 GFLOPS | 1.2 ms
+SVM-1 | Short-term lag / Model1 | 1.0 GFLOPS | 0.15 ms
+
+Paper interpretation:
+- PredXGBR-1 is around 93% faster in inference time than Transformer-2.
+- PredXGBR-1 is around 85% less computationally demanding than Transformer-2.
+- SVM-1 is the most computationally efficient among the reported short-term models, but PredXGBR-1 gives much better prediction accuracy.
+- PredXGBR-1 balances low inference time and high predictive accuracy, making it suitable for real-time short-term load forecasting.
+
+============================================================
+8. GENERALIZATION PERFORMANCE SUMMARY
+============================================================
+Figure 8 compares generalization performance when models are trained on one dataset and tested on other datasets.
+Models compared:
+- SVM-1
+- TCN-1
+- PredXGBR-1
+
+Text-reported findings:
+- PredXGBR-1 achieves lower MAPE and higher R2 than SVM-1 and TCN-1 across cross-dataset testing scenarios.
+- When trained on PJM, PredXGBR-1 keeps MAPE below 5% across test datasets, while SVM-1 and TCN-1 are often around 7–10%.
+- When trained on PJME, PJMW, and AEP, PredXGBR-1 usually records MAPE about 3–5% lower than SVM-1 and TCN-1.
+- When trained on AEP, PredXGBR-1 achieves around 1% MAPE on other datasets.
+- PredXGBR-1 generally maintains R2 close to or above 0.95 across most test scenarios.
+- SVM-1 and TCN-1 show more variable R2 values, sometimes dropping below 0.9.
+
+Important note: Exact numeric values for every Figure 8 bar are not provided in the text extraction; the figure mainly gives visual bar charts. The summary above captures the numeric ranges and statements written in the paper text.
+
+============================================================
+9. EVALUATION METRIC DEFINITIONS
+============================================================
+MAPE = (1/n) * sum(|(y_i - yhat_i) / y_i|) * 100
+- Measures average percentage error.
+- Lower MAPE means better forecasting accuracy.
+
+R2 = 1 - [sum((y_i - yhat_i)^2) / sum((y_i - ybar)^2)]
+- Measures goodness of fit.
+- R2 closer to 1 means better fit to actual load values.
+
+============================================================
+10. QUICK COMPARISON TEXT YOU CAN USE IN RESEARCH WRITING
+============================================================
+The PredXGBR study evaluated short-term electrical load forecasting across five datasets: PJM, PJME, PJMW, AEP, and Dayton. The proposed short-term lag XGBoost model, PredXGBR-1, achieved the best overall performance with MAPE values from 0.98% to 1.28% and R2 values from 0.98 to 0.99. Compared with SVM, RNN, LSTM, TCN, and Transformer baselines, PredXGBR-1 had the lowest average MAPE of 1.104% and the highest average R2 of 0.988. It also maintained low computational cost, requiring 1.5 GFLOPS and 0.2 ms inference time, making it suitable for real-time short-term forecasting.
+

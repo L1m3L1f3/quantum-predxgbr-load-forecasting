@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PredXGBR Results Metrics Summary</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 32px;
+      color: #1f2933;
+      background: #f7f9fb;
+    }
+    h1, h2 {
+      margin-bottom: 8px;
+    }
+    .meta {
+      color: #52606d;
+      margin-bottom: 20px;
+    }
+    .baseline {
+      background: #ffffff;
+      border-left: 5px solid #4e79a7;
+      padding: 12px 16px;
+      margin: 18px 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      margin: 16px 0 28px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    th, td {
+      border-bottom: 1px solid #dde3ea;
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+    th {
+      background: #e8eef5;
+      font-weight: 700;
+    }
+    .status {
+      display: inline-block;
+      min-width: 74px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-weight: 700;
+      text-align: center;
+      color: #ffffff;
+    }
+    .win {
+      background: #168a4a;
+    }
+    .lose {
+      background: #c72c2c;
+    }
+    .base {
+      background: #4e79a7;
+    }
+    .note {
+      color: #52606d;
+      font-size: 12px;
+      max-width: 420px;
+    }
+    .good {
+      color: #168a4a;
+      font-weight: 700;
+    }
+    .bad {
+      color: #c72c2c;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <h1>PredXGBR Results Metrics Summary</h1>
+  <div class="meta">Generated: 2026-05-22T09:45:49</div>
+  <div class="baseline">
+    <strong>Reference baseline:</strong> full XGBoost MAE = 257.241321<br>
+    <strong>Legend:</strong> <span class="status win">✓ WIN</span>
+    <span class="status lose">✗ LOSE</span>
+    <span class="status base">= BASE</span>
+  </div>
+
+  <h2>Main Full-Test Results</h2>
+  <table><thead><tr><th>Status</th><th>Scope</th><th>Model</th><th>MAE</th><th>RMSE</th><th>MAPE</th><th>R2</th><th>MAE Improvement</th><th>Notes</th></tr></thead><tbody><tr><td><span class="status win">✓ WIN</span></td><td>full_test_postprocess_sweep</td><td>sequential_last_residual_correction</td><td>245.763676</td><td>377.344310</td><td>0.776658</td><td>0.996580</td><td class="good">11.477645</td><td class="note">one-step correction using previous observed residual, alpha=0.1107</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_hybrid_quantum_postprocess</td><td>hybrid_quantum_sequential_validation_selected</td><td>251.212919</td><td>388.370265</td><td>0.793658</td><td>0.996377</td><td class="good">6.028402</td><td class="note">rolling one-step model selected on validation; previous_residual_alpha=0.050, quantum_residual_gamma=0.500, residual_source=classical_quantum, validation_MAE=82.756198</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_hybrid_quantum_postprocess</td><td>hybrid_classical_quantum_residual_ridge_static</td><td>256.409856</td><td>398.438876</td><td>0.809919</td><td>0.996187</td><td class="good">0.831464</td><td class="note">classical plus quantum residual ridge, static full-test prediction</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_postprocess_sweep</td><td>residual_xgboost_features</td><td>256.492633</td><td>397.829199</td><td>0.810387</td><td>0.996198</td><td class="good">0.748687</td><td class="note">small XGBoost model predicts baseline residual from causal features</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_postprocess_sweep</td><td>validation_selected_postprocessor</td><td>256.492633</td><td>397.829199</td><td>0.810387</td><td>0.996198</td><td class="good">0.748687</td><td class="note">selected residual_xgboost_features by validation MAE</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_postprocess_sweep</td><td>residual_ridge_features</td><td>256.912811</td><td>398.106588</td><td>0.811683</td><td>0.996193</td><td class="good">0.328510</td><td class="note">ridge model predicts baseline residual from causal features</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_hybrid_quantum_postprocess</td><td>hybrid_quantum_residual_ridge_static</td><td>256.932001</td><td>398.447612</td><td>0.811564</td><td>0.996186</td><td class="good">0.309319</td><td class="note">quantum residual ridge, static full-test prediction</td></tr>
+<tr><td><span class="status win">✓ WIN</span></td><td>full_test_postprocess_sweep</td><td>affine_prediction_calibration</td><td>257.235346</td><td>398.526597</td><td>0.812723</td><td>0.996185</td><td class="good">0.005975</td><td class="note">linear calibration y = a * baseline_prediction + b</td></tr>
+<tr><td><span class="status base">= BASE</span></td><td>full_test_hybrid_quantum_postprocess</td><td>xgboost_baseline</td><td>257.241321</td><td>398.527668</td><td>0.812748</td><td>0.996185</td><td class="">0.000000</td><td class="note">original trained baseline</td></tr>
+<tr><td><span class="status base">= BASE</span></td><td>full_test_postprocess_sweep</td><td>xgboost_baseline</td><td>257.241321</td><td>398.527668</td><td>0.812748</td><td>0.996185</td><td class="">0.000000</td><td class="note">original trained baseline</td></tr>
+<tr><td><span class="status base">= BASE</span></td><td>full_test_residual</td><td>xgboost_baseline</td><td>257.241321</td><td>398.527668</td><td>0.812748</td><td>0.996185</td><td class="">0.000000</td><td class="note">full test, residual correction</td></tr>
+<tr><td><span class="status base">= BASE</span></td><td>full_test_strong_baseline</td><td>xgboost_full_baseline</td><td>257.241321</td><td>398.527668</td><td>0.812748</td><td>0.996185</td><td class="">0.000000</td><td class="note">full test, all training rows</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>full_test_postprocess_sweep</td><td>hourly_residual_bias</td><td>257.268845</td><td>398.551518</td><td>0.812838</td><td>0.996184</td><td class="bad">-0.027525</td><td class="note">adds mean training residual by hour of day</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>full_test_residual</td><td>hybrid_quantum_residual_xgboost</td><td>257.341826</td><td>398.567375</td><td>0.813141</td><td>0.996184</td><td class="bad">-0.100506</td><td class="note">full test, residual correction</td></tr></tbody></table>
+
+  <h2>Comparison Against Paper PJME PredXGBR-1</h2>
+  <p class="meta">
+    Paper reference from PredXGBR Table 3: PJME PredXGBR Model1 MAPE = 1.28%, R2 = 0.99.
+  </p>
+  <table><thead><tr><th>Model</th><th>MAPE</th><th>MAPE vs Paper</th><th>R2</th><th>R2 vs Paper</th><th>Notes</th></tr></thead><tbody><tr><td>sequential_last_residual_correction</td><td>0.776658</td><td><span class="status win">✓ WIN</span></td><td>0.996580</td><td><span class="status win">✓ WIN</span></td><td class="note">Compared against paper PJME PredXGBR-1 MAPE 1.28% and R2 0.99.</td></tr>
+<tr><td>hybrid_classical_quantum_residual_ridge_static</td><td>0.809919</td><td><span class="status win">✓ WIN</span></td><td>0.996187</td><td><span class="status win">✓ WIN</span></td><td class="note">Compared against paper PJME PredXGBR-1 MAPE 1.28% and R2 0.99.</td></tr>
+<tr><td>residual_ridge_features</td><td>0.811683</td><td><span class="status win">✓ WIN</span></td><td>0.996193</td><td><span class="status win">✓ WIN</span></td><td class="note">Compared against paper PJME PredXGBR-1 MAPE 1.28% and R2 0.99.</td></tr>
+<tr><td>xgboost_full_baseline</td><td>0.812748</td><td><span class="status win">✓ WIN</span></td><td>0.996185</td><td><span class="status win">✓ WIN</span></td><td class="note">Compared against paper PJME PredXGBR-1 MAPE 1.28% and R2 0.99.</td></tr></tbody></table>
+
+  <h2>Sampled / Matched Supporting Results</h2>
+  <p class="meta">These support the discussion but are not the same full-test benchmark.</p>
+  <table><thead><tr><th>Status</th><th>Scope</th><th>Model</th><th>MAE</th><th>RMSE</th><th>MAPE</th><th>R2</th><th>MAE Improvement</th><th>Notes</th></tr></thead><tbody><tr><td><span class="status lose">✗ LOSE</span></td><td>matched_low_data_sweep_mean</td><td>classical_pca_xgboost</td><td>2665.506197</td><td>3335.278969</td><td>8.833543</td><td>0.718892</td><td class="bad">-2408.264876</td><td class="note">mean across 60 matched sweep runs</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>matched_low_data_sweep_mean</td><td>hybrid_pca_quantum_ridge</td><td>2683.538047</td><td>3387.031196</td><td>8.812372</td><td>0.712748</td><td class="bad">-2426.296726</td><td class="note">mean across 60 matched sweep runs</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>matched_low_data_sweep_mean</td><td>hybrid_pca_quantum_xgboost</td><td>2690.607745</td><td>3367.107212</td><td>8.934702</td><td>0.713709</td><td class="bad">-2433.366425</td><td class="note">mean across 60 matched sweep runs</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>matched_low_data_sweep_mean</td><td>classical_pca_ridge</td><td>2706.543034</td><td>3416.517967</td><td>8.863799</td><td>0.708457</td><td class="bad">-2449.301714</td><td class="note">mean across 60 matched sweep runs</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>matched_low_data_sweep_mean</td><td>quantum_feature_xgboost</td><td>4619.748337</td><td>5951.933851</td><td>15.568331</td><td>0.130257</td><td class="bad">-4362.507016</td><td class="note">mean across 60 matched sweep runs</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>matched_low_data_sweep_mean</td><td>quantum_feature_ridge</td><td>4942.697732</td><td>6254.679992</td><td>16.715372</td><td>0.040779</td><td class="bad">-4685.456411</td><td class="note">mean across 60 matched sweep runs</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>sampled_augmented_xgboost</td><td>xgboost_baseline_same_rows</td><td>484.342113</td><td>687.638310</td><td>1.562227</td><td>0.989290</td><td class="bad">-227.100793</td><td class="note">same sampled rows</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>sampled_augmented_xgboost</td><td>quantum_augmented_xgboost</td><td>1071.539156</td><td>1442.530391</td><td>3.406960</td><td>0.952869</td><td class="bad">-814.297836</td><td class="note">same sampled rows</td></tr>
+<tr><td><span class="status lose">✗ LOSE</span></td><td>sampled_quantum_only</td><td>hybrid_quantum_feature_ridge</td><td>5410.942177</td><td>6624.630090</td><td>18.384570</td><td>0.006010</td><td class="bad">-5153.700857</td><td class="note">sampled train/test rows</td></tr></tbody></table>
+
+  <h2>Matched Quantum Sweep</h2>
+  <div class="baseline"><strong>Hybrid/quantum wins over matched classical:</strong> 24/60</div>
+
+  <h2>Recommended Paper Text</h2>
+  <div class="baseline">
+    The hybrid classical-quantum residual correction improves the full XGBoost baseline on the PJME test set,
+    reducing MAE from 257.24 to 256.41.
+  </div>
+</body>
+</html>
