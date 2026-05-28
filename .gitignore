@@ -1,0 +1,26 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Local datasets and generated experiment artifacts
+data/
+processed/
+models/
+results/
+logs/
+paper_runs/
+
+# Python/tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pyo
+
+# Local environment files
+.env
+.env.*
+
+# OS/editor files
+.DS_Store
+Thumbs.db
