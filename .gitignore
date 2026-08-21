@@ -4,7 +4,8 @@ __pycache__/
 *.pyc
 
 # Local datasets and generated experiment artifacts
-data/
+data/*
+!data/.gitkeep
 processed/
 models/
 results/

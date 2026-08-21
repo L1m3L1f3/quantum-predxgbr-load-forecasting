@@ -1,0 +1,2 @@
+# This directory is intentionally kept so users can place local dataset CSVs here.
+# Dataset files such as PJME_hourly.csv are ignored by git.

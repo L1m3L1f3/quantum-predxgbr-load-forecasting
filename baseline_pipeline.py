@@ -20,6 +20,8 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
+FORECASTING_DATA_DIR = ROOT / "Forecasting_Data"
+DATA_DIR_CANDIDATES = (DATA_DIR, FORECASTING_DATA_DIR)
 RESULTS_DIR = ROOT / "results"
 MODEL_DIR = ROOT / "models"
 PROCESSED_DIR = ROOT / "processed"
@@ -77,7 +79,12 @@ class RunConfig:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the PredXGBR classical load forecasting baseline.")
     parser.add_argument("--dataset", choices=sorted(DATASETS), default="PJME")
-    parser.add_argument("--data-file", type=Path, default=None, help="Optional CSV path. Defaults to data/<dataset>_hourly.csv.")
+    parser.add_argument(
+        "--data-file",
+        type=Path,
+        default=None,
+        help="Optional CSV path. Defaults to data/<dataset>_hourly.csv; Forecasting_Data/ is also checked as a fallback.",
+    )
     parser.add_argument("--split-date", default=None, help="Date boundary for train/test split.")
     parser.add_argument("--feature-mode", choices=["causal", "original"], default="causal")
     parser.add_argument("--n-estimators", type=int, default=1000)
@@ -104,7 +111,13 @@ def paths_for(dataset: str) -> dict[str, Path]:
 def resolve_data_file(dataset: str, data_file: Path | None) -> Path:
     if data_file is not None:
         return data_file
-    return DATA_DIR / DATASETS[dataset]["file"]
+
+    expected_file = DATASETS[dataset]["file"]
+    for data_dir in DATA_DIR_CANDIDATES:
+        candidate = data_dir / expected_file
+        if candidate.exists():
+            return candidate
+    return DATA_DIR / expected_file
 
 
 def load_dataset(dataset: str, data_file: Path | None = None) -> tuple[pd.DataFrame, str, str, Path]:
@@ -113,7 +126,8 @@ def load_dataset(dataset: str, data_file: Path | None = None) -> tuple[pd.DataFr
         expected = DATASETS[dataset]["file"]
         raise FileNotFoundError(
             f"Missing dataset file: {path}\n"
-            f"Place {expected} in {DATA_DIR}, or pass --data-file /path/to/{expected}."
+            f"Place {expected} in one of {[str(path) for path in DATA_DIR_CANDIDATES]}, "
+            f"or pass --data-file /path/to/{expected}."
         )
 
     df = pd.read_csv(path)
