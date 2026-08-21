@@ -106,6 +106,17 @@ Run another supported dataset after placing its CSV in `Forecasting_Data/` or `d
 .venv/bin/python run_all.py --dataset AEP
 ```
 
+
+## Export Results to Excel and Graphs
+
+After a model run completes, create a downloadable Excel workbook plus extra visualization graphs from the generated `results/` files:
+
+```bash
+.venv/bin/python scripts/export_model_results.py
+```
+
+The exporter writes `reports/predxgbr_local_dataset_results.xlsx` with `metrics`, `run_config`, `predictions`, and `training_history` sheets. It also writes residual-distribution and daily-absolute-error PNG graphs in `reports/`.
+
 ## Run the Quantum Baseline
 
 The repository now includes a first runnable hybrid quantum baseline using PennyLane `lightning.gpu`. It reuses the classical feature table, reduces features to the number of qubits with PCA, encodes them into a simulated quantum circuit, and trains a classical ridge readout on the resulting quantum expectation features.
