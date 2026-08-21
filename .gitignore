@@ -6,6 +6,7 @@ __pycache__/
 # Local datasets and generated experiment artifacts
 data/*
 !data/.gitkeep
+!data/PJME_hourly.csv
 processed/
 models/
 results/
