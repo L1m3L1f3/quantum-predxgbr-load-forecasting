@@ -19,10 +19,9 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_DATA_DIR = ROOT / "data"
+DATA_DIR = ROOT / "data"
 FORECASTING_DATA_DIR = ROOT / "Forecasting_Data"
-DATA_DIR_CANDIDATES = (FORECASTING_DATA_DIR, DEFAULT_DATA_DIR)
-DATA_DIR = next((path for path in DATA_DIR_CANDIDATES if path.exists()), DEFAULT_DATA_DIR)
+DATA_DIR_CANDIDATES = (DATA_DIR, FORECASTING_DATA_DIR)
 RESULTS_DIR = ROOT / "results"
 MODEL_DIR = ROOT / "models"
 PROCESSED_DIR = ROOT / "processed"
@@ -84,7 +83,7 @@ def parse_args() -> argparse.Namespace:
         "--data-file",
         type=Path,
         default=None,
-        help="Optional CSV path. Defaults to Forecasting_Data/<dataset>_hourly.csv when present, then data/<dataset>_hourly.csv.",
+        help="Optional CSV path. Defaults to data/<dataset>_hourly.csv; Forecasting_Data/ is also checked as a fallback.",
     )
     parser.add_argument("--split-date", default=None, help="Date boundary for train/test split.")
     parser.add_argument("--feature-mode", choices=["causal", "original"], default="causal")
