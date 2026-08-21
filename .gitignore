@@ -4,7 +4,9 @@ __pycache__/
 *.pyc
 
 # Local datasets and generated experiment artifacts
-data/
+data/*
+!data/.gitkeep
+!data/PJME_hourly.csv
 processed/
 models/
 results/

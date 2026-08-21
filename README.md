@@ -34,7 +34,8 @@ The original paper scripts are kept under `PredXGBR/` and were not deleted. New 
 |-- run_evaluation.py     # Terminal evaluation entry point
 |-- run_all.py            # Runs preprocessing, training, and evaluation
 |-- run_quantum.py        # Runs the GPU-backed hybrid quantum feature baseline
-|-- data/                 # Local dataset CSVs
+|-- data/                 # Local dataset CSVs, including PJME_hourly.csv
+|-- Forecasting_Data/     # Optional fallback dataset CSVs downloaded outside Git
 |-- processed/            # Generated train/test feature tables
 |-- models/               # Generated trained XGBoost model
 |-- results/              # Generated metrics, predictions, and plots
@@ -51,7 +52,7 @@ Each original dataset folder has the same pattern:
 - `results.py`: loads the model, predicts the test set, and prints metrics.
 - `datagen_plot.py` and `results_plot.py`: plotting-oriented versions of preprocessing and evaluation.
 
-The original scripts hard-code paths like `../../../PJM_Load/PJME_hourly.csv`, so they do not run directly from this cloned repository unless the external `PJM_Load` folder is manually recreated. The root-level runner uses `data/` instead.
+The original scripts hard-code paths like `../../../PJM_Load/PJME_hourly.csv`, so they do not run directly from this cloned repository unless the external `PJM_Load` folder is manually recreated. The root-level runner uses `data/` by default and also checks `Forecasting_Data/` as a fallback.
 
 ## Dataset
 
@@ -64,17 +65,17 @@ The default baseline uses `PJME_hourly.csv` from the public Kaggle dataset "Hour
 - Prediction target for PJME: `PJME_MW`
 - Internal normalized target name in the runner: `Load`
 
-The checked runner also supports the original project's dataset names when their files are placed in `data/`:
+The checked runner supports the original project's dataset names when their files are placed in the default local `data/` folder or the fallback `Forecasting_Data/` folder:
 
-| Dataset | Required file | Target column |
-| --- | --- | --- |
-| PJME | `data/PJME_hourly.csv` | `PJME_MW` or `Load` |
-| PJM | `data/PJM_Load_hourly.csv` | `PJM_Load_MW` or `Load` |
-| AEP | `data/AEP_hourly.csv` | `AEP_MW` or `Load` |
-| DAYTON | `data/DAYTON_hourly.csv` | `DAYTON_MW` or `Load` |
-| PJMW | `data/PJMW_hourly.csv` | `PJMW_MW` or `Load` |
+| Dataset | Default local file | Fallback local file | Target column |
+| --- | --- | --- | --- |
+| PJME | `data/PJME_hourly.csv` | `Forecasting_Data/PJME_hourly.csv` | `PJME_MW` or `Load` |
+| PJM | `data/PJM_Load_hourly.csv` | `Forecasting_Data/PJM_Load_hourly.csv` | `PJM_Load_MW` or `Load` |
+| AEP | `data/AEP_hourly.csv` | `Forecasting_Data/AEP_hourly.csv` | `AEP_MW` or `Load` |
+| DAYTON | `data/DAYTON_hourly.csv` | `Forecasting_Data/DAYTON_hourly.csv` | `DAYTON_MW` or `Load` |
+| PJMW | `data/PJMW_hourly.csv` | `Forecasting_Data/PJMW_hourly.csv` | `PJMW_MW` or `Load` |
 
-If a file is missing, place the required CSV in `data/` or pass `--data-file /path/to/file.csv`.
+If a file is missing, place the required CSV in `data/` or `Forecasting_Data/`, or pass `--data-file /path/to/file.csv`.
 
 ## Installation
 
@@ -85,7 +86,7 @@ python3 -m venv .venv
 
 ## Run the Baseline
 
-Run the complete default PJME experiment:
+After cloning/accessing this repository from GitHub and placing `PJME_hourly.csv` in `data/`, run the complete default PJME experiment:
 
 ```bash
 .venv/bin/python run_all.py
@@ -99,11 +100,22 @@ Equivalent staged commands:
 .venv/bin/python run_evaluation.py
 ```
 
-Run another supported dataset after placing its CSV in `data/`:
+Run another supported dataset after placing its CSV in `data/` or `Forecasting_Data/`:
 
 ```bash
 .venv/bin/python run_all.py --dataset AEP
 ```
+
+
+## Export Results to Excel and Graphs
+
+After a model run completes, create a downloadable Excel workbook plus extra visualization graphs from the generated `results/` files:
+
+```bash
+.venv/bin/python scripts/export_model_results.py
+```
+
+The exporter writes `reports/predxgbr_local_dataset_results.xlsx` with `metrics`, `run_config`, `predictions`, and `training_history` sheets. It also writes residual-distribution and daily-absolute-error PNG graphs in `reports/`.
 
 ## Run the Quantum Baseline
 
